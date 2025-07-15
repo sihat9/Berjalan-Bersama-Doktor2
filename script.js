@@ -11,38 +11,58 @@ document.addEventListener('DOMContentLoaded', function() {
     const MAX_EARLY_BIRDS = 10;
     let registeredCount = 0;
 
-    // Fungsi utama untuk mengirim data
-    async function submitFormData(formData) {
-        try {
-            // Gunakan teknik JSONP untuk menghindari CORS
-            const url = `${GOOGLE_SCRIPT_URL}?callback=handleResponse&data=${encodeURIComponent(JSON.stringify(formData))}`;
+    // Fungsi untuk mengirim data menggunakan JSONP
+    function submitWithJsonp(formData) {
+        return new Promise((resolve, reject) => {
+            // Buat callback unik
+            const callbackName = 'jsonp_callback_' + Math.round(100000 * Math.random());
             
-            // Buat elemen script untuk JSONP
+            // Tambahkan fungsi callback ke window
+            window[callbackName] = function(response) {
+                delete window[callbackName];
+                document.body.removeChild(script);
+                
+                if (response.result === 'success') {
+                    resolve(response);
+                } else {
+                    reject(new Error(response.message || 'Unknown error'));
+                }
+            };
+            
+            // Buat URL dengan parameter callback
+            const encodedData = encodeURIComponent(JSON.stringify(formData));
+            const url = `${GOOGLE_SCRIPT_URL}?callback=${callbackName}&data=${encodedData}`;
+            
+            // Buat elemen script
             const script = document.createElement('script');
             script.src = url;
+            script.onerror = () => {
+                delete window[callbackName];
+                reject(new Error('Failed to load script'));
+            };
+            
             document.body.appendChild(script);
-            document.body.removeChild(script);
+        });
+    }
+
+    // Fungsi untuk menangani submit form
+    async function handleSubmit(formData) {
+        try {
+            // Coba kirim dengan JSONP
+            const response = await submitWithJsonp(formData);
+            showConfirmation(response.isEarlyBird);
+            updateCounter();
             
-            // Simpan ke localStorage sebagai fallback
+            // Simpan ke localStorage sebagai backup
             saveToLocalStorage(formData);
-            
             return true;
         } catch (error) {
             console.error('Error:', error);
             saveToLocalStorage(formData);
+            showError(error.message);
             return false;
         }
     }
-
-    // Fungsi untuk handle response (JSONP callback)
-    window.handleResponse = function(response) {
-        if (response.result === 'success') {
-            showConfirmation(response.isEarlyBird);
-            updateCounter();
-        } else {
-            showError(response.message || 'Pendaftaran gagal. Sila cuba lagi.');
-        }
-    };
 
     // Fungsi-fungsi pendukung
     function saveToLocalStorage(data) {
@@ -70,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function() {
         progressBar.style.width = `${Math.min(100, (registeredCount / MAX_EARLY_BIRDS) * 100)}%`;
     }
 
-    // Event listeners
+    // Event listener untuk form submission
     form.addEventListener('submit', async function(e) {
         e.preventDefault();
         
@@ -93,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        await submitFormData(formData);
+        await handleSubmit(formData);
     });
 
     // Inisialisasi
@@ -111,7 +131,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const pending = JSON.parse(localStorage.getItem('pendingRegistrations') || []);
         if (pending.length > 0) {
             for (const data of pending) {
-                await submitFormData(data);
+                try {
+                    await handleSubmit(data);
+                } catch (error) {
+                    console.error('Gagal mengirim data tertunda:', error);
+                }
             }
             localStorage.removeItem('pendingRegistrations');
         }
