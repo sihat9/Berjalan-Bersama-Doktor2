@@ -4,13 +4,229 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pendaftaran Berjalan Bersama Doktor</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c7be5;
+            --secondary-color: #00d97e;
+            --danger-color: #e63757;
+            --light-color: #f9fafd;
+            --dark-color: #12263f;
+            --gray-color: #95aac9;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        header .logo {
+            margin-bottom: 15px;
+            max-width: 150px;
+            height: auto;
+        }
+
+        header h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: var(--gray-color);
+        }
+
+        form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        input[type="text"],
+        input[type="tel"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .phone-input {
+            display: flex;
+            align-items: center;
+        }
+
+        .phone-input .prefix {
+            background: #f0f2f5;
+            padding: 12px 10px;
+            border: 1px solid #ddd;
+            border-right: none;
+            border-radius: 5px 0 0 5px;
+            font-size: 16px;
+        }
+
+        .phone-input input {
+            border-radius: 0 5px 5px 0;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .checkbox-group input {
+            width: auto;
+            margin-right: 10px;
+        }
+
+        .submit-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #1c6ed8;
+        }
+
+        .info-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+
+        .info-box h2 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .tentatif-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .tentatif-link:hover {
+            text-decoration: underline;
+        }
+
+        #confirmationMessage {
+            background: #e8f4ff;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        #confirmationMessage h2 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .counter {
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .counter p {
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            background: #f0f2f5;
+            height: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress {
+            background: var(--secondary-color);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: var(--gray-color);
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+            
+            form {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <img src="https://via.placeholder.com/150x80?text=KlinikSihatSokmo" alt="Logo Klinik Sihat Sokmo" class="logo">
+            <div class="logo">Klinik SihatSokmo</div>
             <h1>Pendaftaran Program "Berjalan Bersama Doktor"</h1>
             <p>10 peserta terawal berpeluang menebus hadiah istimewa!</p>
         </header>
@@ -56,7 +272,7 @@
             <div class="info-box">
                 <h2>Tentatif Program</h2>
                 <p>Lihat jadual aktiviti untuk hari program.</p>
-                <a href="tentatif.html" class="tentatif-link">Klik di sini untuk lihat tentatif</a>
+                <a href="#" id="tentatifBtn" class="tentatif-link">Klik di sini untuk lihat tentatif</a>
             </div>
 
             <div id="confirmationMessage" class="hidden">
@@ -72,6 +288,75 @@
                     <div class="progress" id="progressBar"></div>
                 </div>
             </div>
+
+            <!-- Modal Tentatif -->
+            <div id="tentatifModal" class="hidden" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; z-index: 1000;">
+                <div style="background: white; padding: 30px; border-radius: 10px; max-width: 800px; width: 90%; max-height: 80vh; overflow-y: auto;">
+                    <h2 style="color: #2c7be5; margin-bottom: 20px; text-align: center;">Tentatif Program</h2>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <div style="display: flex; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed #eee;">
+                            <div style="flex: 0 0 120px; font-weight: 500; color: #2c7be5;">08:00 - 08:30</div>
+                            <div>
+                                <h3 style="margin-bottom: 5px;">Pendaftaran Peserta</h3>
+                                <p style="color: #95aac9; font-size: 14px;">Semua peserta dikehendaki mendaftar di kaunter pendaftaran.</p>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed #eee;">
+                            <div style="flex: 0 0 120px; font-weight: 500; color: #2c7be5;">08:30 - 09:00</div>
+                            <div>
+                                <h3 style="margin-bottom: 5px;">Taklimat Program</h3>
+                                <p style="color: #95aac9; font-size: 14px;">Taklimat keselamatan dan pengenalan program oleh pengurus program.</p>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed #eee;">
+                            <div style="flex: 0 0 120px; font-weight: 500; color: #2c7be5;">09:00 - 10:30</div>
+                            <div>
+                                <h3 style="margin-bottom: 5px;">Aktiviti Berjalan Kesihatan</h3>
+                                <p style="color: #95aac9; font-size: 14px;">Berjalan santai bersama doktor di sekitar taman dengan panduan kesihatan.</p>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed #eee;">
+                            <div style="flex: 0 0 120px; font-weight: 500; color: #2c7be5;">10:30 - 11:00</div>
+                            <div>
+                                <h3 style="margin-bottom: 5px;">Rehat & Minuman Sihat</h3>
+                                <p style="color: #95aac9; font-size: 14px;">Hidangan minuman sihat dan buah-buahan segar.</p>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed #eee;">
+                            <div style="flex: 0 0 120px; font-weight: 500; color: #2c7be5;">11:00 - 12:00</div>
+                            <div>
+                                <h3 style="margin-bottom: 5px;">Sesi Perkongsian Kesihatan</h3>
+                                <p style="color: #95aac9; font-size: 14px;">Perkongsian oleh doktor pakar mengenai penjagaan kesihatan harian.</p>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; margin-bottom: 15px;">
+                            <div style="flex: 0 0 120px; font-weight: 500; color: #2c7be5;">12:00 - 12:30</div>
+                            <div>
+                                <h3 style="margin-bottom: 5px;">Sesi Soal Jawab & Penutup</h3>
+                                <p style="color: #95aac9; font-size: 14px;">Sesi interaktif dengan doktor dan penyampaian hadiah untuk 10 peserta terawal.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="background: #fff8e6; padding: 15px; border-radius: 5px; border-left: 4px solid #ffc107;">
+                        <h3 style="margin-bottom: 10px;">Nota Penting:</h3>
+                        <ul style="padding-left: 20px;">
+                            <li style="margin-bottom: 8px; font-size: 14px;">Sila pakai pakaian dan kasut yang selesa untuk berjalan.</li>
+                            <li style="margin-bottom: 8px; font-size: 14px;">Bawa air minuman sendiri jika perlu.</li>
+                            <li style="margin-bottom: 8px; font-size: 14px;">10 peserta terawal yang telah mendaftar boleh menebus hadiah di kaunter pendaftaran.</li>
+                            <li style="font-size: 14px;">Program mungkin berubah mengikut keadaan cuaca.</li>
+                        </ul>
+                    </div>
+                    
+                    <button id="closeModalBtn" style="display: block; margin: 20px auto 0; padding: 8px 20px; background: #2c7be5; color: white; border: none; border-radius: 5px; cursor: pointer;">Tutup</button>
+                </div>
+            </div>
         </main>
 
         <footer>
@@ -79,7 +364,208 @@
         </footer>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elemen DOM
+            const form = document.getElementById('registrationForm');
+            const confirmationMessage = document.getElementById('confirmationMessage');
+            const earlyBirdMessage = document.getElementById('earlyBirdMessage');
+            const registeredCountElement = document.getElementById('registeredCount');
+            const progressBar = document.getElementById('progressBar');
+            const tentatifBtn = document.getElementById('tentatifBtn');
+            const tentatifModal = document.getElementById('tentatifModal');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            
+            // Konfigurasi
+            const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwRSq4IDDG59UimVrhA226--hAjbJ0tWocnKvoglY706Bvj6R3jOei3iG8IqtpIUwBC/exec';
+            const MAX_EARLY_BIRDS = 10;
+            let registeredCount = 0;
+
+            // Fungsi untuk menampilkan error
+            function showError(message) {
+                alert(`Error: ${message}`);
+                console.error(message);
+            }
+
+            // Fungsi untuk menyimpan data ke localStorage
+            function saveToLocalStorage(data) {
+                try {
+                    let pending = localStorage.getItem('pendingRegistrations');
+                    if (!pending) {
+                        pending = '[]';
+                    }
+                    
+                    const pendingArray = JSON.parse(pending);
+                    pendingArray.push(data);
+                    localStorage.setItem('pendingRegistrations', JSON.stringify(pendingArray));
+                    console.log('Data disimpan di localStorage');
+                    return true;
+                } catch (error) {
+                    console.error('Error menyimpan ke localStorage:', error);
+                    localStorage.setItem('pendingRegistrations', JSON.stringify([data]));
+                    return false;
+                }
+            }
+
+            // Fungsi untuk mengirim data ke Google Sheets
+            async function submitFormData(formData) {
+                try {
+                    const response = await fetch(GOOGLE_SCRIPT_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(formData)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    return data;
+                } catch (error) {
+                    console.error('Error mengirim data:', error);
+                    saveToLocalStorage(formData);
+                    throw error;
+                }
+            }
+
+            // Fungsi untuk menampilkan konfirmasi
+            function showConfirmation(isEarlyBird) {
+                form.style.display = 'none';
+                confirmationMessage.style.display = 'block';
+                earlyBirdMessage.textContent = isEarlyBird 
+                    ? 'Tahniah! Anda antara 10 peserta terawal yang layak hadiah!'
+                    : 'Pendaftaran berjaya! Hadiah untuk 10 peserta pertama sudah habis.';
+                earlyBirdMessage.style.color = isEarlyBird ? '#2ecc71' : '#e74c3c';
+            }
+
+            // Fungsi untuk update counter
+            function updateCounter() {
+                registeredCount++;
+                registeredCountElement.textContent = registeredCount;
+                progressBar.style.width = `${Math.min(100, (registeredCount / MAX_EARLY_BIRDS) * 100)}%`;
+            }
+
+            // Fungsi untuk memproses data tertunda
+            async function processPendingSubmissions() {
+                try {
+                    const pendingData = localStorage.getItem('pendingRegistrations');
+                    if (!pendingData) return;
+
+                    const pending = JSON.parse(pendingData);
+                    if (!Array.isArray(pending) || pending.length === 0) return;
+
+                    const successItems = [];
+                    const failedItems = [];
+
+                    for (const data of pending) {
+                        try {
+                            await submitFormData(data);
+                            successItems.push(data);
+                        } catch (error) {
+                            console.error('Gagal mengirim data tertunda:', error);
+                            failedItems.push(data);
+                        }
+                    }
+
+                    localStorage.setItem('pendingRegistrations', JSON.stringify(failedItems));
+                    
+                    if (successItems.length > 0) {
+                        console.log(`Berhasil mengirim ${successItems.length} data tertunda`);
+                        updateCounter();
+                    }
+                } catch (error) {
+                    console.error('Error memproses data tertunda:', error);
+                }
+            }
+
+            // Event listener untuk form submission
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const formData = {
+                    fullName: document.getElementById('fullName').value.trim(),
+                    icNumber: document.getElementById('icNumber').value.trim(),
+                    phoneNumber: '6' + document.getElementById('phoneNumber').value.trim(),
+                    address: document.getElementById('address').value.trim(),
+                    email: document.getElementById('email').value.trim() || 'N/A'
+                };
+
+                // Validasi
+                if (!formData.fullName || !formData.icNumber || !formData.phoneNumber || !formData.address) {
+                    showError('Sila isi semua maklumat yang diperlukan');
+                    return;
+                }
+
+                if (!/^\d{6}-\d{2}-\d{4}$/.test(formData.icNumber)) {
+                    showError('Format No. Kad Pengenalan tidak sah (contoh: 901231-01-1234)');
+                    return;
+                }
+
+                if (!document.getElementById('agreeTerms').checked) {
+                    showError('Sila setujui terma dan syarat sebelum mendaftar');
+                    return;
+                }
+
+                try {
+                    const response = await submitFormData(formData);
+                    showConfirmation(response.isEarlyBird);
+                    updateCounter();
+                } catch (error) {
+                    showError('Pendaftaran gagal. Data telah disimpan dan akan cuba dihantar semula nanti.');
+                }
+            });
+
+            // Event listener untuk tombol tentatif
+            tentatifBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                tentatifModal.style.display = 'flex';
+            });
+
+            // Event listener untuk tombol close modal
+            closeModalBtn.addEventListener('click', function() {
+                tentatifModal.style.display = 'none';
+            });
+
+            // Tutup modal ketika klik di luar area modal
+            tentatifModal.addEventListener('click', function(e) {
+                if (e.target === tentatifModal) {
+                    tentatifModal.style.display = 'none';
+                }
+            });
+
+            // Format input No. IC
+            document.getElementById('icNumber').addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                
+                if (value.length > 6) {
+                    value = value.substring(0, 6) + '-' + value.substring(6);
+                }
+                
+                if (value.length > 9) {
+                    value = value.substring(0, 9) + '-' + value.substring(9);
+                }
+                
+                e.target.value = value.substring(0, 14);
+            });
+            
+            // Format input No. Telefon (pastikan hanya angka)
+            document.getElementById('phoneNumber').addEventListener('input', function(e) {
+                e.target.value = e.target.value.replace(/\D/g, '');
+            });
+
+            // Inisialisasi
+            function init() {
+                registeredCount = 0;
+                registeredCountElement.textContent = registeredCount;
+                progressBar.style.width = '0%';
+                processPendingSubmissions();
+            }
+
+            init();
+        });
+    </script>
 </body>
 </html>
